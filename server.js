@@ -17,5 +17,5 @@ app.get("/salud", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(Servidor Punto Vital activo en puerto ${PORT});
+console.log("servidor Punto Vital activo");
 });
