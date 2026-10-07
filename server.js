@@ -62,5 +62,5 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(Servidor Punto Vital activo en puerto ${PORT});
+  console.log("Servidor Punto Vital activo");
 });
