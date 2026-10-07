@@ -64,6 +64,76 @@
       font-size: 58px;
       box-shadow: 0 8px 25px rgba(8, 127, 195, 0.25);
     }
+    .cara {
+  position: relative;
+  width: 78px;
+  height: 92px;
+  background: #f2c7a5;
+  border-radius: 45% 45% 48% 48%;
+}
+
+.cabello {
+  position: absolute;
+  width: 86px;
+  height: 50px;
+  background: #4a2c22;
+  top: -8px;
+  left: -4px;
+  border-radius: 50% 50% 35% 35%;
+}
+
+.ojo {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: #263238;
+  border-radius: 50%;
+  top: 40px;
+  animation: parpadeo 4s infinite;
+}
+
+.ojo-izq {
+  left: 20px;
+}
+
+.ojo-der {
+  right: 20px;
+}
+
+.nariz {
+  position: absolute;
+  width: 5px;
+  height: 10px;
+  background: #d79d7c;
+  border-radius: 50%;
+  top: 51px;
+  left: 37px;
+}
+
+.boca {
+  position: absolute;
+  width: 25px;
+  height: 5px;
+  background: #9e3f4f;
+  border-radius: 50%;
+  bottom: 17px;
+  left: 27px;
+  transition: all 0.12s ease;
+}
+
+.boca.hablando {
+  height: 16px;
+  border-radius: 50%;
+}
+
+@keyframes parpadeo {
+  0%, 45%, 48%, 100% {
+    transform: scaleY(1);
+  }
+  46%, 47% {
+    transform: scaleY(0.1);
+  }
+}
 
     .avatar-area h2 {
       margin: 14px 0 5px;
@@ -155,7 +225,15 @@
   </div>
 
   <div class="avatar-area">
-    <div class="avatar">👩🏻‍⚕️</div>
+    <div class="avatar">
+  <div class="cara" id="cara">
+    <div class="cabello"></div>
+    <div class="ojo ojo-izq"></div>
+    <div class="ojo ojo-der"></div>
+    <div class="nariz"></div>
+    <div class="boca" id="boca"></div>
+  </div>
+</div>
     <h2>Recepcionista Virtual</h2>
     <div class="estado" id="estado">Lista para ayudarte</div>
   </div>
@@ -203,17 +281,31 @@
   }
 
   function hablar(mensaje) {
-    if (!("speechSynthesis" in window)) return;
+  if (!("speechSynthesis" in window)) return;
 
-    speechSynthesis.cancel();
+  speechSynthesis.cancel();
 
-    const voz = new SpeechSynthesisUtterance(mensaje);
-    voz.lang = "es-MX";
-    voz.rate = 1;
-    voz.pitch = 1;
+  const voz = new SpeechSynthesisUtterance(mensaje);
+  voz.lang = "es-MX";
+  voz.rate = 1;
+  voz.pitch = 1;
 
-    speechSynthesis.speak(voz);
-  }
+  const boca = document.getElementById("boca");
+
+  voz.onstart = () => {
+    boca.classList.add("hablando");
+  };
+
+  voz.onend = () => {
+    boca.classList.remove("hablando");
+  };
+
+  voz.onerror = () => {
+    boca.classList.remove("hablando");
+  };
+
+  speechSynthesis.speak(voz);
+}
 
   async function mandarMensaje(mensaje) {
     mensaje = mensaje.trim();
