@@ -47,9 +47,14 @@ app.post("/chat", async (req, res) => {
       });
     }
 
-    res.json({
-      respuesta: datos.output_text
-    });
+    const textoRespuesta = datos.output
+  ?.flatMap(item => item.content || [])
+  ?.find(item => item.type === "output_text")
+  ?.text;
+
+res.json({
+  respuesta: textoRespuesta
+});
 
   } catch (error) {
     console.error(error);
