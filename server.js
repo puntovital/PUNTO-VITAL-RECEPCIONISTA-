@@ -41,6 +41,7 @@ app.post("/chat", async (req, res) => {
     });
 
     const datos = await respuesta.json();
+    console.log("RESPUESTA OPENAI:", JSON.stringify(datos, null, 2));
 
     if (!respuesta.ok) {
       console.error("Error de OpenAI:", datos);
