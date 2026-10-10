@@ -13,7 +13,10 @@ app.get("/", (req, res) => {
 app.get("/salud", (req, res) => {
   res.json({ ok: true });
 });
-
+app.post(”/chat”, async (req, res) => {
+try {
+const mensaje = req.body.mensaje;    if (!mensaje) {
+return res.status(400).json({
         error: "Falta el mensaje"
       });
     }
